@@ -1,4 +1,15 @@
-:root {
+@import "tailwindcss";
+
+@theme {
+  --color-back: #291308;
+}
+
+body {
+  background-color: #111;
+  overflow: hidden;
+}
+
+/* :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -11,58 +22,66 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+} */
+
+.mw-app {
+  max-width: 500px;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+.dimmer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(4px);
+  background-color: #2212308e;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+section {
+  width: 100%;
+  padding: 2em 1.4em;
+  animation: fadein 0.5s;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+.fade-in {
+  animation: fadein 0.5s;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+@keyframes fadein {
+  0% {
+    opacity: 0;
   }
-  a:hover {
-    color: #747bff;
+  100% {
+    opacity: 1;
   }
-  button {
-    background-color: #f9f9f9;
+}
+
+.field-to-reveal-container {
+  perspective: 400px;
+}
+
+.field-to-reveal {
+  transform-style: preserve-3d;
+  .field-front,
+  .field-back {
+    backface-visibility: hidden;
+  }
+
+  .field-back {
+    transform: rotateY(180deg);
+  }
+}
+
+.field-revealed {
+  animation: reveal-field 0.8s ease-in-out both;
+}
+
+@keyframes reveal-field {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(180deg);
   }
 }
