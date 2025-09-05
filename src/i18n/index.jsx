@@ -8,7 +8,7 @@ export const languagesList = [
   { id: "es", name: "Español" },
 ];
 
-export const DEFAULT_LANG = "es";
+export const DEFAULT_LANG = "en";
 
 const languages = {
   es,

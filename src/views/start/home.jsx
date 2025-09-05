@@ -4,6 +4,7 @@ import Modal from "@/components/modal";
 import Logo from "@/components/logo";
 import I18n from "@/i18n";
 import Button from "@/components/button";
+import setFullScreen from "@/utils/fullscreen";
 
 const Home = () => {
   const { game, setView, setShowAbout, setShowLang } = useContext(AppContext);
@@ -12,15 +13,16 @@ const Home = () => {
 
   return (
     <>
-      <section>
+      <section className="section-home">
         <Logo />
-        <p className="text-center py-5">
+        <p className="text-center py-5 px-3 max-w-[380px] mx-auto">
           <I18n id="start.p1" />
         </p>
         <hr className="border-amber-800 border-dotted w-1/2 mx-auto" />
         <nav className=" flex flex-col gap-6 w-2/3 mx-auto py-6">
           <Button
             onClick={() => {
+              setFullScreen();
               if (game.sizeName) {
                 setIsOpenNewGame(true);
               } else {
@@ -33,6 +35,7 @@ const Home = () => {
           <Button
             disabled={!game.sizeName}
             onClick={() => {
+              setFullScreen();
               setView("game");
             }}
           >

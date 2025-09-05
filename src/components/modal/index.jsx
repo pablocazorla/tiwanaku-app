@@ -5,7 +5,7 @@ const Modal = ({ children, isOpen, onClose, maxWidth = 500 }) => {
     <div className="fixed top-0 left-0 w-[100dvw] h-[100dvh] bg-black/10 z-[1000] flex flex-col justify-center">
       <div className="dimmer" onClick={onClose ? onClose : null} />
       <div
-        className="relative w-full mx-auto px-6 z-[1050]"
+        className="relative w-full mx-auto px-6 z-[1050] fade-from-bottom "
         style={{ maxWidth: `${maxWidth}px` }}
       >
         <div className="bg-back border border-amber-600/30 rounded-lg p-6 shadow-[0_5px_20px_rgba(0,0,0,0.5)] relative">

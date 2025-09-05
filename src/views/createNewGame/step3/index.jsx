@@ -8,7 +8,7 @@ const Step3 = () => {
   const { setView, resetGame, storeGame } = useContext(AppContext);
 
   return (
-    <div className="fade-in">
+    <div className="fade-from-right">
       <h1 className="text-center font-bold text-2xl mb-6 border-b border-amber-800 border-dotted pb-3">
         <I18n id="createNewGame.config" />
       </h1>

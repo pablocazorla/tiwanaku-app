@@ -11,7 +11,7 @@ const App = () => {
   const { view } = useContext(AppContext);
   return (
     <>
-      <main className="mx-auto h-[100dvh] bg-back text-amber-100 overflow-hidden flex flex-col justify-center mw-app">
+      <main className="mx-auto h-[100dvh]  text-amber-100 overflow-hidden flex flex-col justify-center mw-app">
         {view === "start" && <StartView />}
         {view === "createNewGame" && <CreateNewGame />}
         {view === "game" && <Game />}

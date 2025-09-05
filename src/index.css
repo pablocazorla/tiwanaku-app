@@ -5,7 +5,7 @@
 }
 
 body {
-  background-color: #111;
+  background-color: var(--color-back);
   color: #fff;
   overflow: hidden;
 }
@@ -37,16 +37,26 @@ body {
   height: 100%;
   backdrop-filter: blur(4px);
   background-color: #2212308e;
+  animation: fadein 0.3s;
 }
 
-section {
+section:not(.section-home) {
   width: 100%;
   padding: 2em 1.4em;
+  animation: fade-from-right 0.5s;
+}
+
+.section-home,
+.fade-in {
   animation: fadein 0.5s;
 }
 
-.fade-in {
-  animation: fadein 0.5s;
+.fade-from-right {
+  animation: fade-from-right 0.5s;
+}
+
+.fade-from-bottom {
+  animation: fade-from-bottom 0.3s ease-out;
 }
 
 @keyframes fadein {
@@ -55,6 +65,28 @@ section {
   }
   100% {
     opacity: 1;
+  }
+}
+
+@keyframes fade-from-right {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+}
+
+@keyframes fade-from-bottom {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
   }
 }
 
@@ -90,4 +122,9 @@ section {
 canvas.qr-code {
   width: 240px !important;
   height: 240px !important;
+}
+
+* {
+  scrollbar-color: #0f0702 transparent;
+  scrollbar-width: thin;
 }

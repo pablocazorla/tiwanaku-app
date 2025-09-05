@@ -20,6 +20,22 @@ import fruitImg_3 from "@/assets/img/f-3.webp";
 import fruitImg_4 from "@/assets/img/f-4.webp";
 import fruitImg_5 from "@/assets/img/f-5.webp";
 import fruitImg from "@/assets/img/fruit.webp";
+//
+import r0 from "@/assets/img/symbols/r0.webp";
+import r1 from "@/assets/img/symbols/r1.webp";
+import r2 from "@/assets/img/symbols/r2.webp";
+import r3 from "@/assets/img/symbols/r3.webp";
+import r4 from "@/assets/img/symbols/r4.webp";
+//
+import c0 from "@/assets/img/symbols/c0.webp";
+import c1 from "@/assets/img/symbols/c1.webp";
+import c2 from "@/assets/img/symbols/c2.webp";
+import c3 from "@/assets/img/symbols/c3.webp";
+import c4 from "@/assets/img/symbols/c4.webp";
+import c5 from "@/assets/img/symbols/c5.webp";
+import c6 from "@/assets/img/symbols/c6.webp";
+import c7 from "@/assets/img/symbols/c7.webp";
+import c8 from "@/assets/img/symbols/c8.webp";
 
 const Images = {
   shared: {
@@ -45,6 +61,22 @@ const Images = {
     4: fruitImg_4,
     5: fruitImg_5,
     default: fruitImg,
+  },
+  symbols: {
+    r0,
+    r1,
+    r2,
+    r3,
+    r4,
+    c0,
+    c1,
+    c2,
+    c3,
+    c4,
+    c5,
+    c6,
+    c7,
+    c8,
   },
 };
 

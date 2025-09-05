@@ -21,7 +21,9 @@ const Step1 = ({ setStep }) => {
       <h1 className="text-center font-bold text-2xl mb-6 border-b border-amber-800 border-dotted pb-3">
         <I18n id="createNewGame.title" />
       </h1>
-      <h2 className="text-center mb-7">Selecciona el tamaño del mapa:</h2>
+      <h2 className="text-center mb-7">
+        <I18n id="createNewGame.select-mapsize" />
+      </h2>
       <div className="flex gap-8 justify-center">
         {mapTypes.map(({ sizeName, rows, cols, max_cells_revealed }) => {
           if (sizeName === "separator") {

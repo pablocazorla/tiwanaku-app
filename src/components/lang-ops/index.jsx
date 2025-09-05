@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import AppContext from "@/context";
-
 import Modal from "@/components/modal";
 import { languagesList } from "@/i18n";
 import Button from "@/components/button";
+import setFullScreen from "@/utils/fullscreen";
 
 const ModalLang = () => {
   const { setOptions, showLang, setShowLang } = useContext(AppContext);
@@ -17,6 +17,7 @@ const ModalLang = () => {
               variant="secondary-outline"
               size="sm"
               onClick={() => {
+                setFullScreen();
                 setOptions({ lang: language.id });
                 setShowLang(false);
               }}

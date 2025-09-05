@@ -18,7 +18,7 @@ const Menu = () => {
   return (
     <>
       <button
-        className="fixed z-50 top-2 right-2 p-2 rounded-full text-white text-2xl cursor-pointer bg-white/10"
+        className="fixed z-50 top-2 right-2 p-2 rounded-full text-white text-2xl cursor-pointer bg-white/10 fade-in"
         onClick={() => setIsOpen((v) => !v)}
       >
         {isOpen ? <IconClose /> : <IconMenu />}
