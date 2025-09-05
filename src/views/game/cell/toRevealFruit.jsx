@@ -2,25 +2,10 @@ import { useContext, useEffect, useState } from "react";
 import AppContext from "@/context";
 import Button from "@/components/button";
 import I18n from "@/i18n";
-//
-import fruitImg_1 from "@/assets/img/f-1.webp";
-import fruitImg_2 from "@/assets/img/f-2.webp";
-import fruitImg_3 from "@/assets/img/f-3.webp";
-import fruitImg_4 from "@/assets/img/f-4.webp";
-import fruitImg_5 from "@/assets/img/f-5.webp";
-import fruitImg from "@/assets/img/fruit.webp";
 import { cx } from "@/utils/cx";
 
-const fruitImgs = {
-  1: fruitImg_1,
-  2: fruitImg_2,
-  3: fruitImg_3,
-  4: fruitImg_4,
-  5: fruitImg_5,
-};
-
 const ToRevealFruit = ({ cell, closeModal }) => {
-  const { updateCell } = useContext(AppContext);
+  const { updateCell, Images } = useContext(AppContext);
 
   const { fruit } = cell;
 
@@ -52,12 +37,12 @@ const ToRevealFruit = ({ cell, closeModal }) => {
         )}
       >
         <img
-          src={fruitImg}
+          src={Images.fruits.default}
           alt={"fruit"}
           className="top-0 left-0 absolute w-full h-full field-front"
         />
         <img
-          src={fruitImgs[fruit]}
+          src={Images.fruits[fruit]}
           alt={fruit}
           className="top-0 left-0 absolute w-full h-full field-back"
         />

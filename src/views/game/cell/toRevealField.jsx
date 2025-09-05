@@ -2,23 +2,10 @@ import { useContext, useEffect, useState } from "react";
 import AppContext from "@/context";
 import Button from "@/components/button";
 import I18n from "@/i18n";
-
-import sandImg from "@/assets/img/sand.webp";
-import dirtImg from "@/assets/img/dirt.webp";
-import grassImg from "@/assets/img/grass.webp";
-import rockImg from "@/assets/img/rock.webp";
-import fieldImg from "@/assets/img/field.webp";
 import { cx } from "@/utils/cx";
 
-const fieldImgs = {
-  sand: sandImg,
-  dirt: dirtImg,
-  grass: grassImg,
-  rock: rockImg,
-};
-
 const ToRevealField = ({ cell, closeModal }) => {
-  const { updateCell } = useContext(AppContext);
+  const { updateCell, Images } = useContext(AppContext);
 
   const { field } = cell;
 
@@ -50,12 +37,12 @@ const ToRevealField = ({ cell, closeModal }) => {
         )}
       >
         <img
-          src={fieldImg}
+          src={Images.fields.default}
           alt={"field"}
           className="top-0 left-0 absolute w-full h-full field-front"
         />
         <img
-          src={fieldImgs[field]}
+          src={Images.fields[field]}
           alt={field}
           className="top-0 left-0 absolute w-full h-full field-back"
         />

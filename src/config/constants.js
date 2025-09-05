@@ -1,13 +1,17 @@
+import { DEFAULT_LANG } from "@/i18n";
+
+export const ROWS_COUNT = 5;
+
 export const MAP_TYPES = [
   {
-    name: "5 x 5",
-    rows: 5,
+    sizeName: "5 x 5",
+    rows: ROWS_COUNT,
     cols: 5,
     max_cells_revealed: 4,
   },
   {
-    name: "5 x 9",
-    rows: 5,
+    sizeName: "5 x 9",
+    rows: ROWS_COUNT,
     cols: 9,
     max_cells_revealed: 7,
   },
@@ -16,8 +20,6 @@ export const MAP_TYPES = [
 export const FIELD_IDS = ["sand", "dirt", "grass", "rock"];
 
 export const MAX_CELLS_BY_COLOR = 15;
-
-export const MAX_CELLS_REVEALED = 7;
 
 export const COLOR = {
   fruit: {
@@ -33,4 +35,17 @@ export const COLOR = {
     grass: "#d3e297",
     rock: "#bbcddb",
   },
+};
+
+export const DEFAULT_OPTIONS = {
+  lang: DEFAULT_LANG,
+};
+
+export const DEFAULT_EMPTY_GAME = {
+  sizeName: null,
+  rows: 0,
+  cols: 0,
+  max_cells_revealed: 0,
+  grid: [],
+  counts: [],
 };

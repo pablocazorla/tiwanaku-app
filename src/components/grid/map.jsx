@@ -1,21 +1,10 @@
 import { useContext } from "react";
 import AppContext from "@/context";
-import sandImg from "@/assets/img/sand.webp";
-import dirtImg from "@/assets/img/dirt.webp";
-import grassImg from "@/assets/img/grass.webp";
-import rockImg from "@/assets/img/rock.webp";
 import { COLOR } from "@/config/constants";
 import { cx } from "@/utils/cx";
 
-const fieldImgs = {
-  sand: sandImg,
-  dirt: dirtImg,
-  grass: grassImg,
-  rock: rockImg,
-};
-
 const Map = ({ initial }) => {
-  const { game, setCellSelected } = useContext(AppContext);
+  const { game, setCellSelected, Images } = useContext(AppContext);
 
   const { grid, cols } = game;
 
@@ -50,7 +39,7 @@ const Map = ({ initial }) => {
                 >
                   {visibleField ? (
                     <img
-                      src={fieldImgs[field]}
+                      src={Images.fieldsMini[field]}
                       alt={field}
                       className="w-full h-full"
                     />

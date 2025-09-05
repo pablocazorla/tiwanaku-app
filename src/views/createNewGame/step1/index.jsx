@@ -8,7 +8,7 @@ import I18n from "../../../i18n";
 const mapTypes = [
   MAP_TYPES[0],
   {
-    name: "separator",
+    sizeName: "separator",
   },
   MAP_TYPES[1],
 ];
@@ -23,11 +23,11 @@ const Step1 = ({ setStep }) => {
       </h1>
       <h2 className="text-center mb-7">Selecciona el tamaño del mapa:</h2>
       <div className="flex gap-8 justify-center">
-        {mapTypes.map(({ name, rows, cols, max_cells_revealed }) => {
-          if (name === "separator") {
+        {mapTypes.map(({ sizeName, rows, cols, max_cells_revealed }) => {
+          if (sizeName === "separator") {
             return (
               <div
-                key={name}
+                key={sizeName}
                 className="border-amber-600 border-l-2 rotate-12"
               ></div>
             );
@@ -35,15 +35,15 @@ const Step1 = ({ setStep }) => {
           const cells = Array.from({ length: rows * cols }, (_, i) => i);
           return (
             <div
-              key={name}
+              key={sizeName}
               className={cx(
                 "border-2 border-transparent rounded-lg opacity-40 cursor-pointer transition-all",
                 {
-                  "border-amber-500 opacity-100": name === game.sizeName,
+                  "border-amber-500 opacity-100": sizeName === game.sizeName,
                 }
               )}
               onClick={() => {
-                setGameSize(name, rows, cols, max_cells_revealed);
+                setGameSize(sizeName, rows, cols, max_cells_revealed);
               }}
             >
               <div
@@ -62,7 +62,7 @@ const Step1 = ({ setStep }) => {
                 })}
               </div>
               <div className="text-center text-amber-400 pb-3 text-xl leading-none font-medium">
-                {name}
+                {sizeName}
               </div>
             </div>
           );

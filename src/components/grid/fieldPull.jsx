@@ -1,21 +1,9 @@
 import { useEffect, useState, useContext, useMemo } from "react";
 import AppContext from "@/context";
 import I18n from "@/i18n";
-import sandImg from "@/assets/img/sand.webp";
-import dirtImg from "@/assets/img/dirt.webp";
-import grassImg from "@/assets/img/grass.webp";
-import rockImg from "@/assets/img/rock.webp";
-import { COLOR } from "@/config/constants";
-
-const fieldImgs = {
-  sand: sandImg,
-  dirt: dirtImg,
-  grass: grassImg,
-  rock: rockImg,
-};
 
 const FieldPull = ({ initial }) => {
-  const { game } = useContext(AppContext);
+  const { game, Images } = useContext(AppContext);
 
   const restFields = useMemo(() => {
     const restFields = game.counts.reduce((acc, { color, count }) => {
@@ -51,7 +39,7 @@ const FieldPull = ({ initial }) => {
             <div key={color} className="flex items-center text-white gap-1">
               <div className="w-8">
                 <img
-                  src={fieldImgs[color]}
+                  src={Images.fieldsMini[color]}
                   alt={color}
                   className="w-full h-full"
                 />

@@ -6,6 +6,7 @@
 
 body {
   background-color: #111;
+  color: #fff;
   overflow: hidden;
 }
 
@@ -84,4 +85,9 @@ section {
   100% {
     transform: rotateY(180deg);
   }
+}
+
+canvas.qr-code {
+  width: 240px !important;
+  height: 240px !important;
 }

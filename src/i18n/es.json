@@ -1,7 +1,11 @@
 {
   "start.p1": "Tiwanaku es un proyecto de código abierto que permite a los usuarios crear sus propias aplicaciones de chatbots.",
-  "btn.newGame": "Nuevo juego",
-  "btn.continueGame": "Continuar juego",
+  "loader.p1": "Te han compartido una partida en curso, para que puedas cargarla.",
+  "btn.loadGame": "¿Cargar partida?",
+  "btn.newGame": "Nueva partida",
+  "btn.newGame.ask": "¿Iniciar nueva partida?",
+  "btn.continueGame": "Continuar partida",
+  "btn.shareGame": "Compartir partida",
   "btn.about": "Acerca de",
   "btn.lang": "En / Es",
   "btn.createMap": "Crear mapa",
@@ -11,6 +15,11 @@
   "btn.startGame": "Iniciar partida",
   "btn.revealField": "Revelar campo",
   "btn.revealFruit": "¿Revelar fruta?",
+  "btn.lang.es": "Español",
+  "btn.lang.en": "English",
+  "btn.share.copyGame": "Copiar partida",
+  "btn.share.shareGame": "Compartir partida",
+  "createNewGame.mapSize": "Tamaño del mapa",
   "createNewGame.title": "Nuevo juego",
   "createNewGame.loading.0": "Generando tierras de cultivo...",
   "createNewGame.loading.1": "Sembrando las semillas...",
@@ -21,5 +30,8 @@
   "createNewGame.failed.2": "Por favor, inténtalo de nuevo.",
   "createNewGame.config": "Preparación inicial",
   "createNewGame.fieldPull": "Losetas restantes:",
-  "game.p1": "Haz clic en un campo para revelar"
+  "game.p1": "Haz clic en un campo para revelar",
+  "newGame.ask": "Hay una partida en curso. Si reinicias, perderás la partida actual.",
+  "p.share.1": "Comparte tu partida para que pueda abrirse en otros dispositivos:",
+  "p.share.2": "También puedes compartir vía QR:"
 }

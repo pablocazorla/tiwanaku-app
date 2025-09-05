@@ -17,8 +17,10 @@ const Button = ({
           "opacity-20 cursor-default": disabled,
           //
           "bg-amber-700": variant === "primary",
-          "border border-amber-900/60": variant === "secondary-outline",
+          "border border-amber-900/60 bg-back/80":
+            variant === "secondary-outline",
           "shadow-none": variant === "transparent",
+          "bg-yellow-700": variant === "share",
           //
           "text-xs": size === "sm",
         },
