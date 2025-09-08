@@ -31,6 +31,16 @@ class GridGenerator {
     this.iteration = 0; // para controlar pausas asincrónicas
   }
 
+  // Baraja un arreglo (Fisher–Yates) y devuelve una nueva copia barajada
+  shuffle(array) {
+    const copy = [...array];
+    for (let i = copy.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+  }
+
   // Verifica si una posición está dentro de la grilla
   isValidPosition(row, col) {
     return row >= 0 && row < this.ROWS && col >= 0 && col < this.COLS;
@@ -164,8 +174,11 @@ class GridGenerator {
       numbers.push(i);
     }
 
+    const shuffledNumbers = this.shuffle(numbers);
+    const shuffledCells = this.shuffle(cells);
+
     // Intentar asignar números a las celdas
-    return this.assignNumbers(cells, numbers, 0, color);
+    return this.assignNumbers(shuffledCells, shuffledNumbers, 0, color);
   }
 
   // Asigna números a las celdas del sector usando backtracking
@@ -209,6 +222,7 @@ class GridGenerator {
     const allShapes = [];
     for (let size = 1; size <= this.MAX_SECTOR_SIZE; size++) {
       const shapes = this.generateSectorShapes(size);
+
       const uniqueShapes = [];
       const seen = new Set();
 
@@ -223,33 +237,86 @@ class GridGenerator {
       allShapes.push(...uniqueShapes);
     }
 
-    return await this.backtrack(allShapes, 0);
+    const randomizedShapes = this.shuffle(allShapes);
+
+    // Preindexar: para cada celda, qué placements (lista de celdas) existen
+    const placementsByCell = new Map();
+    for (let r = 0; r < this.ROWS; r++) {
+      for (let c = 0; c < this.COLS; c++) {
+        placementsByCell.set(`${r},${c}`, []);
+      }
+    }
+
+    for (const shape of randomizedShapes) {
+      const placements = this.getShapePlacements(shape);
+      for (const placement of placements) {
+        for (const [r, c] of placement) {
+          const key = `${r},${c}`;
+          const list = placementsByCell.get(key);
+          if (list) list.push(placement);
+        }
+      }
+    }
+
+    this._placementsByCell = placementsByCell;
+
+    return await this.backtrack(randomizedShapes, 0);
   }
 
   async backtrack(allShapes, cellsPlaced) {
     if (cellsPlaced === this.TOTAL_CELLS) return true;
 
-    let freeRow = -1,
-      freeCol = -1;
-    outer: for (let r = 0; r < this.ROWS; r++) {
+    // MRV: elegir la celda vacía con menos colocaciones viables actualmente
+    let bestCell = null;
+    let bestCount = Infinity;
+
+    for (let r = 0; r < this.ROWS; r++) {
       for (let c = 0; c < this.COLS; c++) {
-        if (this.grid[r][c] === null) {
-          freeRow = r;
-          freeCol = c;
-          break outer;
+        if (this.grid[r][c] !== null) continue;
+        const key = `${r},${c}`;
+        const allPlacements = this._placementsByCell?.get(key) || [];
+        // Filtrar placements: todas las celdas libres
+        let count = 0;
+        for (const placement of allPlacements) {
+          let ok = true;
+          for (const [pr, pc] of placement) {
+            if (this.grid[pr][pc] !== null) {
+              ok = false;
+              break;
+            }
+          }
+          if (ok) count++;
+        }
+        if (count < bestCount) {
+          bestCount = count;
+          bestCell = [r, c];
+          if (bestCount === 0) break; // poda temprana
         }
       }
+      if (bestCount === 0) break;
     }
 
-    if (freeRow === -1) return cellsPlaced === this.TOTAL_CELLS;
+    if (!bestCell) return cellsPlaced === this.TOTAL_CELLS;
 
-    for (const shape of allShapes) {
-      for (const placement of this.getShapePlacements(shape)) {
+    const [freeRow, freeCol] = bestCell;
+
+    for (const shape of this.shuffle(allShapes)) {
+      const placements = this.shuffle(this.getShapePlacements(shape));
+      for (const placement of placements) {
         if (!placement.some(([r, c]) => r === freeRow && c === freeCol))
           continue;
         if (!this.areCellsFree(placement)) continue;
 
-        for (const color of this.COLORS) {
+        for (const color of this.shuffle(this.COLORS)) {
+          // Poda por límite máximo de color
+          const futureCells = placement.length;
+          const currentColorCount = this.sectors.reduce(
+            (acc, s) => acc + (s.color === color ? s.size : 0),
+            0
+          );
+          if (currentColorCount + futureCells > MAX_CELLS_BY_COLOR) {
+            continue;
+          }
           if (this.canSectorHaveColor(placement, color)) {
             if (this.placeSector(placement, color)) {
               this.sectors.push({
@@ -325,9 +392,11 @@ class GridGenerator {
         const row = Math.floor(Math.random() * this.ROWS);
         const col = Math.floor(Math.random() * this.COLS);
 
-        grid[row][col].visibleField = true;
-        grid[row][col].visibleFruit = true;
-        d++;
+        if (!grid[row][col].visibleField && !grid[row][col].visibleFruit) {
+          grid[row][col].visibleField = true;
+          grid[row][col].visibleFruit = true;
+          d++;
+        }
       }
 
       return {
