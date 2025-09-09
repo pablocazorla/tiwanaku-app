@@ -136,23 +136,25 @@ export const AppContextProvider = ({ children }) => {
   }, []);
 
   const setGameSize = useCallback(
-    (sizeName, rows, cols, max_cells_revealed) => {
+    (sizeName, rows, cols, max_cells_revealed, otomasCount) => {
       setGame({
         sizeName,
         rows,
         cols,
         max_cells_revealed,
+        otomasCount,
       });
     },
     []
   );
 
-  const setGameGrid = useCallback((grid, counts) => {
+  const setGameGrid = useCallback((grid, counts, otomas) => {
     setGame((prevGame) => {
       return {
         ...prevGame,
         grid,
         counts,
+        otomas,
       };
     });
   }, []);

@@ -1,10 +1,16 @@
-import { FIELD_IDS, MAX_CELLS_BY_COLOR } from "@/config/constants";
+import {
+  FIELD_IDS,
+  MAX_CELLS_BY_COLOR,
+  MAX_STEPS_ALGORITHM,
+  MAX_STEPS_RETRY,
+} from "@/config/constants";
 
 class GridGenerator {
-  constructor({ rows, cols, max_cells_revealed }) {
+  constructor({ rows, cols, max_cells_revealed, otomasCount }) {
     this.ROWS = rows;
     this.COLS = cols;
     this.MAX_CELLS_REVEALED = max_cells_revealed;
+    this.OTOMAS_COUNT = otomasCount;
     this.TOTAL_CELLS = this.ROWS * this.COLS;
     this.COLORS = [...FIELD_IDS];
     this.MAX_SECTOR_SIZE = 5;
@@ -29,6 +35,8 @@ class GridGenerator {
       .map(() => Array(this.COLS).fill(null));
     this.sectors = [];
     this.iteration = 0; // para controlar pausas asincrónicas
+    this.stepsAlgorithm = 0;
+    this.stepsRetry = 0;
   }
 
   // Baraja un arreglo (Fisher–Yates) y devuelve una nueva copia barajada
@@ -59,6 +67,10 @@ class GridGenerator {
       }
     }
     return adjacent;
+  }
+
+  randomInt(min, maxIncl) {
+    return Math.floor(Math.random() * (maxIncl - min + 1)) + min;
   }
 
   // Verifica si un sector puede tener un color específico
@@ -264,6 +276,10 @@ class GridGenerator {
   }
 
   async backtrack(allShapes, cellsPlaced) {
+    this.stepsAlgorithm++;
+    if (this.stepsAlgorithm >= MAX_STEPS_ALGORITHM) {
+      return false;
+    }
     if (cellsPlaced === this.TOTAL_CELLS) return true;
 
     // MRV: elegir la celda vacía con menos colocaciones viables actualmente
@@ -347,9 +363,8 @@ class GridGenerator {
     return false;
   }
 
-  async generate() {
-    // ("Generando grilla...");
-
+  async tryToFindSolution() {
+    this.stepsAlgorithm = 0;
     if (await this.solve()) {
       // (`Solución encontrada en ${endTime - startTime}ms`);
 
@@ -372,7 +387,7 @@ class GridGenerator {
 
       if (failedByColor) {
         // ("No se pudo encontrar una solución");
-        return { success: false, grid: null, sectors: null };
+        return { success: false, grid: null, counts: [], otomas: {} };
       }
 
       const grid = this.grid.map((row) => {
@@ -388,16 +403,31 @@ class GridGenerator {
 
       let d = 0;
 
-      while (d < this.MAX_CELLS_REVEALED) {
+      const revealed = [];
+
+      const cellsRevealed = this.randomInt(
+        this.OTOMAS_COUNT || 2,
+        this.MAX_CELLS_REVEALED
+      );
+
+      while (d < cellsRevealed) {
         const row = Math.floor(Math.random() * this.ROWS);
         const col = Math.floor(Math.random() * this.COLS);
 
         if (!grid[row][col].visibleField && !grid[row][col].visibleFruit) {
           grid[row][col].visibleField = true;
           grid[row][col].visibleFruit = true;
+          revealed.push([col, row]);
           d++;
         }
       }
+
+      const otomas = revealed.slice(0, this.OTOMAS_COUNT).reduce((acc, pos) => {
+        const [col, row] = pos;
+        acc[`${col}_${row}`] = true;
+
+        return acc;
+      }, {});
 
       return {
         success: true,
@@ -408,11 +438,23 @@ class GridGenerator {
             count: counts[color],
           };
         }),
+        otomas,
       };
     } else {
-      // ("No se pudo encontrar una solución");
-      return { success: false, grid: null, sectors: null };
+      return { success: false, grid: null, counts: [], otomas: {} };
     }
+  }
+
+  async generate() {
+    this.stepsRetry = 0;
+    while (this.stepsRetry <= MAX_STEPS_RETRY) {
+      const result = await this.tryToFindSolution();
+      if (result.success) {
+        return result;
+      }
+      this.stepsRetry++;
+    }
+    return { success: false, grid: null, counts: [], otomas: {} };
   }
 }
 

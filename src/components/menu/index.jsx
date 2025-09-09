@@ -7,6 +7,7 @@ import Button from "@/components/button";
 import Dialog from "./dialog";
 import Modal from "@/components/modal";
 import { IconShare } from "@/components/icons/share";
+import LangLabel from "@/components/lang-ops/langLabel";
 
 const Menu = () => {
   const { setView, setShowAbout, setShowShareGame, setShowLang } =
@@ -63,7 +64,7 @@ const Menu = () => {
             size="sm"
             onClick={() => setShowLang(true)}
           >
-            <I18n id="btn.lang" />
+            <LangLabel />
           </Button>
         </nav>
       </Dialog>

@@ -2,11 +2,15 @@ import { useContext } from "react";
 import AppContext from "@/context";
 import { COLOR } from "@/config/constants";
 import { cx } from "@/utils/cx";
+import { IconMeeple } from "@/components/icons/meeple";
+
+// const visibleField = true;
+// const visibleFruit = true;
 
 const Map = ({ initial }) => {
   const { game, setCellSelected, Images } = useContext(AppContext);
 
-  const { grid, cols } = game;
+  const { grid, cols, otomas } = game;
 
   return (
     <div className="flex flex-col select-none">
@@ -20,7 +24,12 @@ const Map = ({ initial }) => {
             }}
           >
             {row.map((cell, x) => {
-              const { field, fruit, visibleField, visibleFruit } = cell;
+              const {
+                field,
+                fruit, //
+                visibleField,
+                visibleFruit,
+              } = cell;
 
               return (
                 <div
@@ -57,6 +66,11 @@ const Map = ({ initial }) => {
                       }}
                     >
                       {fruit}
+                    </div>
+                  ) : null}
+                  {initial && otomas[`${x}_${y}`] ? (
+                    <div className="absolute bottom-1 right-1">
+                      <IconMeeple className="text-black w-5 h-5" />
                     </div>
                   ) : null}
                 </div>

@@ -8,12 +8,14 @@ export const MAP_TYPES = [
     rows: ROWS_COUNT,
     cols: 5,
     max_cells_revealed: 4,
+    otomasCount: 0,
   },
   {
     sizeName: "5 x 9",
     rows: ROWS_COUNT,
     cols: 9,
     max_cells_revealed: 7,
+    otomasCount: 5,
   },
 ];
 
@@ -46,6 +48,11 @@ export const DEFAULT_EMPTY_GAME = {
   rows: 0,
   cols: 0,
   max_cells_revealed: 0,
+  otomasCount: 0,
   grid: [],
   counts: [],
+  otomas: {},
 };
+
+export const MAX_STEPS_ALGORITHM = 5000;
+export const MAX_STEPS_RETRY = 3;

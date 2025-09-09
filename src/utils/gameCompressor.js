@@ -79,8 +79,8 @@ const GameCompressor = {
           count: count[color],
         };
       });
-    } catch (e) {
-      console.log(e);
+    } finally {
+      //
     }
 
     return game;

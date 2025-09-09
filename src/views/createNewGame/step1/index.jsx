@@ -25,50 +25,58 @@ const Step1 = ({ setStep }) => {
         <I18n id="createNewGame.select-mapsize" />
       </h2>
       <div className="flex gap-8 justify-center">
-        {mapTypes.map(({ sizeName, rows, cols, max_cells_revealed }) => {
-          if (sizeName === "separator") {
+        {mapTypes.map(
+          ({ sizeName, rows, cols, max_cells_revealed, otomasCount }) => {
+            if (sizeName === "separator") {
+              return (
+                <div
+                  key={sizeName}
+                  className="border-amber-600 border-l-2 rotate-12"
+                ></div>
+              );
+            }
+            const cells = Array.from({ length: rows * cols }, (_, i) => i);
             return (
               <div
                 key={sizeName}
-                className="border-amber-600 border-l-2 rotate-12"
-              ></div>
-            );
-          }
-          const cells = Array.from({ length: rows * cols }, (_, i) => i);
-          return (
-            <div
-              key={sizeName}
-              className={cx(
-                "border-2 border-transparent rounded-lg opacity-40 cursor-pointer transition-all",
-                {
-                  "border-amber-500 opacity-100": sizeName === game.sizeName,
-                }
-              )}
-              onClick={() => {
-                setGameSize(sizeName, rows, cols, max_cells_revealed);
-              }}
-            >
-              <div
-                className="grid gap-1 p-3"
-                style={{
-                  gridTemplateColumns: `repeat(${cols}, 1fr)`,
+                className={cx(
+                  "border-2 border-transparent rounded-lg opacity-40 cursor-pointer transition-all",
+                  {
+                    "border-amber-500 opacity-100": sizeName === game.sizeName,
+                  }
+                )}
+                onClick={() => {
+                  setGameSize(
+                    sizeName,
+                    rows,
+                    cols,
+                    max_cells_revealed,
+                    otomasCount
+                  );
                 }}
               >
-                {cells.map((cell) => {
-                  return (
-                    <div
-                      key={cell}
-                      className="bg-amber-700 text-white text-center w-4 aspect-square"
-                    ></div>
-                  );
-                })}
+                <div
+                  className="grid gap-1 p-3"
+                  style={{
+                    gridTemplateColumns: `repeat(${cols}, 1fr)`,
+                  }}
+                >
+                  {cells.map((cell) => {
+                    return (
+                      <div
+                        key={cell}
+                        className="bg-amber-700 text-white text-center w-4 aspect-square"
+                      ></div>
+                    );
+                  })}
+                </div>
+                <div className="text-center text-amber-400 pb-3 text-xl leading-none font-medium">
+                  {sizeName}
+                </div>
               </div>
-              <div className="text-center text-amber-400 pb-3 text-xl leading-none font-medium">
-                {sizeName}
-              </div>
-            </div>
-          );
-        })}
+            );
+          }
+        )}
       </div>
       <nav className=" flex flex-col gap-6 w-2/3 mx-auto pt-12">
         <Button disabled={!game.sizeName} onClick={() => setStep(2)}>

@@ -24,17 +24,22 @@ const Loader = ({ setSubStep, setStep }) => {
   }, []);
 
   useEffect(() => {
-    const { rows, cols, max_cells_revealed } = game;
+    const { rows, cols, max_cells_revealed, otomasCount } = game;
     if (rows === 0 || cols === 0) {
       return;
     }
     const generateSolution = async () => {
-      const generator = new GridGenerator({ rows, cols, max_cells_revealed });
+      const generator = new GridGenerator({
+        rows,
+        cols,
+        max_cells_revealed,
+        otomasCount,
+      });
       // Esperamos a que el generador complete su tarea
       const result = await generator.generate();
 
       if (result.success) {
-        setGameGrid(result.grid, result.counts);
+        setGameGrid(result.grid, result.counts, result.otomas);
         setStep(3);
       } else {
         setSubStep(1);

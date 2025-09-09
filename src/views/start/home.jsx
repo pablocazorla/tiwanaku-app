@@ -5,6 +5,7 @@ import Logo from "@/components/logo";
 import I18n from "@/i18n";
 import Button from "@/components/button";
 import setFullScreen from "@/utils/fullscreen";
+import LangLabel from "@/components/lang-ops/langLabel";
 
 const Home = () => {
   const { game, setView, setShowAbout, setShowLang } = useContext(AppContext);
@@ -56,7 +57,7 @@ const Home = () => {
             size="sm"
             onClick={() => setShowLang(true)}
           >
-            <I18n id="btn.lang" />
+            <LangLabel />
           </Button>
         </nav>
       </section>
