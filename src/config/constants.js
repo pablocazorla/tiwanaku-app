@@ -37,6 +37,21 @@ export const COLOR = {
     grass: "#d3e297",
     rock: "#bbcddb",
   },
+  forCanvas: {
+    fruit: {
+      1: "#2d231c",
+      2: "#bb4d00",
+      3: "#2d231c",
+      4: "#bb4d00",
+      5: "#936b4f",
+    },
+    field: {
+      sand: "#da4908",
+      dirt: "#da4908",
+      grass: "#e7ac0a",
+      rock: "#e7ac0a",
+    },
+  },
 };
 
 export const DEFAULT_OPTIONS = {
@@ -56,3 +71,8 @@ export const DEFAULT_EMPTY_GAME = {
 
 export const MAX_STEPS_ALGORITHM = 5000;
 export const MAX_STEPS_RETRY = 3;
+
+export const CANVAS_LOADER_CONFIG = {
+  cellSize: 25,
+  padding: 2,
+};

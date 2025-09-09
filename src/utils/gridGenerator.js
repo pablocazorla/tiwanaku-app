@@ -3,10 +3,16 @@ import {
   MAX_CELLS_BY_COLOR,
   MAX_STEPS_ALGORITHM,
   MAX_STEPS_RETRY,
+  CANVAS_LOADER_CONFIG,
+  COLOR,
 } from "@/config/constants";
 
+const canvasCellSize =
+  CANVAS_LOADER_CONFIG.cellSize - 2 * CANVAS_LOADER_CONFIG.padding;
+const canvasCellPadding = CANVAS_LOADER_CONFIG.padding;
+
 class GridGenerator {
-  constructor({ rows, cols, max_cells_revealed, otomasCount }) {
+  constructor({ rows, cols, max_cells_revealed, otomasCount, canvas }) {
     this.ROWS = rows;
     this.COLS = cols;
     this.MAX_CELLS_REVEALED = max_cells_revealed;
@@ -37,6 +43,55 @@ class GridGenerator {
     this.iteration = 0; // para controlar pausas asincrónicas
     this.stepsAlgorithm = 0;
     this.stepsRetry = 0;
+
+    //
+    this.canvas = canvas || null;
+    this.initCanvas();
+  }
+  initCanvas() {
+    if (!this.canvas) {
+      return;
+    }
+    this.ctx = this.canvas.getContext("2d");
+    this.ctx.fillStyle = "#FFF";
+  }
+  drawCanvas() {
+    if (!this.canvas) {
+      return;
+    }
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    this.grid.forEach((row, y) => {
+      row.forEach((cell, x) => {
+        if (cell) {
+          if (cell.color) {
+            this.ctx.fillStyle = COLOR.forCanvas.field[cell.color];
+            this.ctx.fillRect(
+              x * CANVAS_LOADER_CONFIG.cellSize + canvasCellPadding,
+              y * CANVAS_LOADER_CONFIG.cellSize + canvasCellPadding,
+              canvasCellSize,
+              canvasCellSize
+            );
+          }
+          if (cell.number) {
+            this.ctx.fillStyle = COLOR.forCanvas.fruit[cell.number];
+            this.ctx.beginPath();
+            // draw a circle
+            this.ctx.arc(
+              x * CANVAS_LOADER_CONFIG.cellSize +
+                CANVAS_LOADER_CONFIG.cellSize / 2,
+              y * CANVAS_LOADER_CONFIG.cellSize +
+                CANVAS_LOADER_CONFIG.cellSize / 2,
+              canvasCellSize / 3,
+              0,
+              2 * Math.PI
+            );
+            this.ctx.closePath();
+            this.ctx.fill();
+          }
+        }
+      });
+    });
   }
 
   // Baraja un arreglo (Fisher–Yates) y devuelve una nueva copia barajada
@@ -280,6 +335,7 @@ class GridGenerator {
     if (this.stepsAlgorithm >= MAX_STEPS_ALGORITHM) {
       return false;
     }
+    this.drawCanvas();
     if (cellsPlaced === this.TOTAL_CELLS) return true;
 
     // MRV: elegir la celda vacía con menos colocaciones viables actualmente

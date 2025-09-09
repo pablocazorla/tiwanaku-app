@@ -1,11 +1,14 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useRef } from "react";
 import AppContext from "@/context";
 import I18n from "@/i18n";
 import GridGenerator from "@/utils/gridGenerator";
+import { CANVAS_LOADER_CONFIG } from "@/config/constants";
 
 const list = Array.from({ length: 5 }, (_, i) => i);
 
 const Loader = ({ setSubStep, setStep }) => {
+  const canvasRef = useRef(null);
+
   const { game, setGameGrid } = useContext(AppContext);
 
   const [numSelected, setNumSelected] = useState(0);
@@ -34,6 +37,7 @@ const Loader = ({ setSubStep, setStep }) => {
         cols,
         max_cells_revealed,
         otomasCount,
+        canvas: canvasRef.current,
       });
       // Esperamos a que el generador complete su tarea
       const result = await generator.generate();
@@ -52,7 +56,21 @@ const Loader = ({ setSubStep, setStep }) => {
 
   return (
     <div className="fade-in">
-      <div className="rounded-full w-[80px] aspect-square border-8 border-amber-600 border-t-transparent mx-auto animate-spin"></div>
+      {/* <div className="rounded-full w-[80px] aspect-square border-8 border-amber-600 border-t-transparent mx-auto animate-spin"></div> */}
+      <div
+        className="mx-auto"
+        style={{
+          maxWidth: `${CANVAS_LOADER_CONFIG.cellSize * game.cols}px`,
+        }}
+      >
+        <canvas
+          className="block w-full h-full"
+          width={CANVAS_LOADER_CONFIG.cellSize * game.cols}
+          height={CANVAS_LOADER_CONFIG.cellSize * game.rows}
+          ref={canvasRef}
+        ></canvas>
+      </div>
+
       {list.map((num) => {
         if (numSelected === num) {
           return (
