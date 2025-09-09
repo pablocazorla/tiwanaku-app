@@ -33,7 +33,7 @@ const Cell = () => {
   };
 
   return (
-    <Modal isOpen={cellSelected} onClose={closeModal} maxWidth={300}>
+    <Modal isOpen={cellSelected} onClose={closeModal} maxWidth={330}>
       {cellSelected ? (
         <ModalContent cellSelected={cellSelected} closeModal={closeModal} />
       ) : null}

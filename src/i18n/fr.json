@@ -1,5 +1,5 @@
 {
-  "start.p1": "Application pour générer des cartes de manière programmatique pour le jeu de société \"Tiwanaku\".",
+  "start.p1": "Application pour générer des cartes de manière automatique pour le jeu de société \"Tiwanaku\".",
   "loader.p1": "On vous a partagé une partie en cours afin que vous puissiez la charger.",
   "btn.loadGame": "Charger la partie ?",
   "btn.newGame": "Nouvelle partie",
@@ -37,7 +37,7 @@
   "about.title": "À propos",
   "about.p.1": "Tiwanaku est un merveilleux jeu de déduction, créé par Olivier Grégoire, illustré par Raphaël Samakh, et publié à l’origine par Sit Down!.",
   "about.p.2": "Depuis que j’ai découvert le jeu, je l’ai trouvé merveilleux, et très vite je me suis rendu compte que les cartes incluses dans le jeu ne me suffiraient pas.",
-  "about.p.3": "Alors je me suis mis au travail. Je suis développeur, donc j’ai eu l’idée de créer une application capable de générer des cartes de manière programmatique...",
+  "about.p.3": "Alors je me suis mis au travail. Je suis développeur, donc j’ai eu l’idée de créer une application capable de générer des cartes de manière automatique...",
   "about.p.4": "Et voici le résultat !",
   "about.p.5": "Tiwanaku est un projet open source ; c’est une application faite avec amour et effort, sans but lucratif. Ce n’est pas officiel, ni autorisé par l’éditeur ou le concepteur. Vous pouvez trouver le code source ici :",
   "about.p.6": "Si vous avez des doutes, des questions ou quoi que ce soit, n’hésitez pas à m’écrire :",
