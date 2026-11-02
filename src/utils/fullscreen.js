@@ -1,6 +1,16 @@
 const setFullScreen = () => {
   if (!document.fullscreenElement) {
-    document.documentElement.requestFullscreen();
+    try {
+      document.documentElement.requestFullscreen();
+    }
+    catch (e) {
+      if (e instanceof TypeError) {
+        console.error('requestFullscreen not supported', e);
+      }
+      else {
+        throw e;
+      }
+    }
   }
 };
 
